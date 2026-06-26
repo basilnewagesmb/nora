@@ -842,7 +842,7 @@
         </div>
 
         <!-- BGM audio (plays on scroll, no controls) -->
-        <audio id="bgm" loop preload="none">
+        <audio id="bgm" loop preload="auto">
             <source src="https://res.cloudinary.com/lrd7rkfa/video/upload/v1782495916/bgm_jkapuz.mp3" type="audio/mpeg">
         </audio>
 
@@ -927,16 +927,30 @@
 
             var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+            /* ── Audio element (declared early so dismissEntry can reference it) ── */
+            var bgm         = document.getElementById('bgm');
+            var musicPlayer = document.getElementById('music-player');
+            var musicBtn    = document.getElementById('music-play-btn');
+            var bgmStarted  = false;
+
             /* ── Entry popup → then preloader ── */
-            var entryPopup  = document.getElementById('entry-popup');
-            var preloader   = document.getElementById('preloader');
+            var entryPopup   = document.getElementById('entry-popup');
+            var preloader    = document.getElementById('preloader');
             var preloaderNum = document.getElementById('preloader-num');
             var audioUnlocked = false;
 
             function dismissEntry() {
                 audioUnlocked = true;
+
+                // Play then immediately pause — this unlocks audio in the browser
+                // within the guaranteed user-gesture window of this click handler.
+                bgm.volume = 0;
+                bgm.play().then(function () {
+                    bgm.pause();
+                    bgm.currentTime = 0;
+                }).catch(function () {});
+
                 entryPopup.classList.add('hidden');
-                // Small delay so fade looks intentional before counter starts
                 setTimeout(function () {
                     runPreloader(initPage);
                 }, 600);
@@ -974,11 +988,7 @@
             }
 
             /* ── BGM: play on scroll past hero, show player ── */
-            var bgm         = document.getElementById('bgm');
-            var musicPlayer = document.getElementById('music-player');
-            var musicBtn    = document.getElementById('music-play-btn');
-            var heroEl      = document.getElementById('hero');
-            var bgmStarted  = false;
+            var heroEl = document.getElementById('hero');
 
             function startBgm() {
                 if (bgmStarted || !audioUnlocked) return;
