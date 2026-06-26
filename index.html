@@ -730,6 +730,15 @@
                 });
             }
 
+            /* ── Fisher-Yates shuffle ── */
+            function shuffle(arr) {
+                for (var i = arr.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+                }
+                return arr;
+            }
+
             /* ── Fetch all resources via server-side proxy (avoids CORS on Admin API) ── */
             async function fetchAll() {
                 const r = await fetch('/api/media');
@@ -887,9 +896,9 @@
                     return;
                 }
 
-                mediaList = list;
-                countEl.textContent = list.length + ' item' + (list.length !== 1 ? 's' : '');
-                buildGrid(list);
+                mediaList = shuffle(list);
+                countEl.textContent = mediaList.length + ' item' + (mediaList.length !== 1 ? 's' : '');
+                buildGrid(mediaList);
                 grid.style.display = 'block';
 
             }).catch(function (err) {
