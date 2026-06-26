@@ -7,287 +7,62 @@
     <!-- EDIT: friend's name in the title -->
     <title>Farewell, Nora! 💛</title>
 
-    <!-- Google Fonts: Playfair Display + Inter + Caveat (handwriting) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ============================================================
-           DESIGN TOKENS
-        ============================================================ */
         :root {
-            --amber:         #F59E0B;
-            --amber-light:   #FCD34D;
-            --amber-dark:    #D97706;
-            --rose:          #FCA5A5;
-            --rose-light:    #FEE2E2;
-            --cream:         #FFFBEB;
-            --cream-dark:    #FEF3C7;
-            --charcoal:      #1C1917;
-            --charcoal-soft: #44403C;
-            --muted:         #78716C;
-            --white:         #FFFFFF;
-
-            --font-display:     'Playfair Display', Georgia, serif;
-            --font-body:        'Inter', system-ui, sans-serif;
-            --font-hand:        'Caveat', cursive;
-
-            --radius-card: 14px;
-            --radius-lg:   22px;
-
-            --shadow-soft:   0 4px 24px rgba(28, 25, 23, 0.08);
-            --shadow-medium: 0 8px 40px rgba(28, 25, 23, 0.13);
-            --shadow-hover:  0 18px 52px rgba(28, 25, 23, 0.20);
+            --amber:    #F59E0B;
+            --charcoal: #1C1917;
+            --cream:    #FFFBEB;
+            --radius:   12px;
         }
 
-        /* ============================================================
-           RESET & BASE
-        ============================================================ */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html { scroll-behavior: smooth; }
-
         body {
-            font-family: var(--font-body);
             background: var(--cream);
+            font-family: 'Inter', system-ui, sans-serif;
             color: var(--charcoal);
-            line-height: 1.65;
-            overflow-x: hidden;
         }
 
-        img { display: block; max-width: 100%; }
-
-        /* ============================================================
-           HERO
-        ============================================================ */
-        .hero {
-            position: relative;
-            min-height: 100svh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 80px 24px 60px;
-            overflow: hidden;
-            background: linear-gradient(
-                145deg,
-                #FFFBEB  0%,
-                #FDE68A 22%,
-                #FBBF24 46%,
-                #F59E0B 60%,
-                #FCA5A5 80%,
-                #FECACA 100%
-            );
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 70% 60% at 50% 38%, rgba(255,255,255,0.38) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        #confetti-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 760px;
-        }
-
-        .hero-eyebrow {
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--charcoal-soft);
-            margin-bottom: 18px;
-        }
-
-        .hero-name {
-            font-family: var(--font-display);
-            font-size: clamp(4rem, 12vw, 8rem);
-            font-weight: 700;
-            line-height: 1.0;
-            color: var(--charcoal);
-            margin-bottom: 22px;
-            text-shadow: 0 2px 16px rgba(255,255,255,0.45);
-        }
-
-        .hero-tagline {
-            font-family: var(--font-display);
-            font-style: italic;
-            font-size: clamp(1.05rem, 2.8vw, 1.5rem);
-            color: var(--charcoal-soft);
-            margin-bottom: 52px;
-            max-width: 540px;
-            margin-inline: auto;
-        }
-
-        .hero-scroll {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            color: var(--charcoal-soft);
-            animation: bob 2.2s ease-in-out infinite;
-        }
-
-        .hero-scroll svg { width: 18px; height: 18px; }
-
-        @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(7px); }
-        }
-
-        /* ============================================================
-           SHARED SECTION CHROME
-        ============================================================ */
-        .section { padding: 100px 24px; }
-
-        .section-inner { max-width: 1120px; margin: 0 auto; }
-
-        .section-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.26em;
-            text-transform: uppercase;
-            color: var(--amber-dark);
-            margin-bottom: 10px;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            line-height: 1.18;
-            color: var(--charcoal);
-            margin-bottom: 36px;
-        }
-
-        /* ============================================================
-           ABOUT / TRIBUTE
-        ============================================================ */
-        .about { background: var(--white); }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 72px;
-            align-items: start;
-        }
-
-        .about-text p {
-            font-size: 1.02rem;
-            color: var(--charcoal-soft);
-            line-height: 1.85;
-            margin-bottom: 20px;
-        }
-
-        .pull-quote {
-            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
-            border-left: 4px solid var(--amber);
-            border-radius: 0 var(--radius-card) var(--radius-card) 0;
-            padding: 36px 32px;
-            box-shadow: var(--shadow-soft);
-            margin-top: 6px;
-        }
-
-        .pull-quote blockquote {
-            font-family: var(--font-display);
-            font-style: italic;
-            font-size: 1.22rem;
-            color: var(--charcoal);
-            line-height: 1.65;
-            margin-bottom: 18px;
-        }
-
-        .pull-quote cite {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--amber-dark);
-            font-style: normal;
-        }
-
-        @media (max-width: 780px) {
-            .about-grid { grid-template-columns: 1fr; gap: 44px; }
-        }
-
-        /* ============================================================
-           PHOTO GALLERY
-        ============================================================ */
-        .gallery { background: var(--cream); }
-
-        .gallery-grid {
-            columns: 3 260px;
-            column-gap: 16px;
+        /* ── Gallery grid ── */
+        .gallery {
+            padding: 24px;
+            columns: 4 220px;
+            column-gap: 14px;
         }
 
         .gallery-item {
             break-inside: avoid;
-            margin-bottom: 16px;
-            border-radius: var(--radius-card);
+            margin-bottom: 14px;
+            border-radius: var(--radius);
             overflow: hidden;
-            position: relative;
             cursor: pointer;
-            box-shadow: var(--shadow-soft);
+            box-shadow: 0 4px 18px rgba(28,25,23,.10);
             outline-offset: 3px;
         }
+
+        .gallery-item:focus-visible { outline: 3px solid var(--amber); }
 
         .gallery-item img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(28,25,23,.78) 0%, rgba(28,25,23,.06) 55%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.32s ease;
-            display: flex;
-            align-items: flex-end;
-            padding: 18px;
-        }
-
-        .gallery-caption {
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: #fff;
-            transform: translateY(8px);
-            transition: transform 0.32s ease;
+            transition: transform 0.4s cubic-bezier(.25,.46,.45,.94);
         }
 
         @media (hover: hover) {
-            .gallery-item:hover img               { transform: scale(1.06); }
-            .gallery-item:hover .gallery-overlay  { opacity: 1; }
-            .gallery-item:hover .gallery-caption  { transform: translateY(0); }
+            .gallery-item:hover img { transform: scale(1.05); }
         }
 
-        .gallery-item:focus-visible {
-            outline: 3px solid var(--amber);
-        }
-
-        /* Lightbox */
+        /* ── Lightbox ── */
         .lightbox {
             position: fixed;
             inset: 0;
             z-index: 9000;
-            background: rgba(28, 25, 23, 0.93);
+            background: rgba(28,25,23,.94);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             display: flex;
@@ -296,39 +71,29 @@
             padding: 24px;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.28s ease, visibility 0.28s ease;
+            transition: opacity .25s ease, visibility .25s ease;
         }
 
-        .lightbox.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .lightbox.active { opacity: 1; visibility: visible; }
 
         .lightbox-inner {
             position: relative;
-            max-width: 920px;
+            max-width: 940px;
             width: 100%;
         }
 
         .lightbox-img {
             width: 100%;
-            max-height: 80vh;
+            max-height: 88vh;
             object-fit: contain;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-hover);
+            border-radius: var(--radius);
             display: block;
-        }
-
-        .lightbox-caption {
-            text-align: center;
-            margin-top: 14px;
-            color: rgba(255,255,255,.72);
-            font-size: 0.88rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,.4);
         }
 
         .lb-btn {
             position: absolute;
-            background: rgba(255,255,255,.13);
+            background: rgba(255,255,255,.14);
             border: none;
             color: #fff;
             width: 44px;
@@ -338,154 +103,26 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s;
             font-size: 1rem;
+            transition: background .2s;
             backdrop-filter: blur(4px);
         }
 
-        .lb-btn:hover  { background: rgba(255,255,255,.26); }
+        .lb-btn:hover { background: rgba(255,255,255,.28); }
 
-        .lb-close { top: -52px; right: 0; font-size: 1.4rem; }
-        .lb-prev  { top: 50%; left: -58px; transform: translateY(-50%); }
+        .lb-close { top: -52px; right: 0; font-size: 1.5rem; }
+        .lb-prev  { top: 50%; left: -58px;  transform: translateY(-50%); }
         .lb-next  { top: 50%; right: -58px; transform: translateY(-50%); }
 
         @media (max-width: 680px) {
-            .lb-prev { left: 4px; }
+            .lb-prev { left: 4px;  }
             .lb-next { right: 4px; }
+            .gallery { padding: 12px; column-gap: 10px; }
         }
 
-        /* ============================================================
-           MESSAGES WALL
-        ============================================================ */
-        .messages { background: var(--white); }
-
-        .messages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .message-card {
-            border-radius: var(--radius-card);
-            padding: 30px 28px;
-            box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .message-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .message-card::before {
-            content: '\201C';
-            font-family: var(--font-display);
-            font-size: 9rem;
-            line-height: 1;
-            color: rgba(255,255,255,.52);
-            position: absolute;
-            top: -14px;
-            left: 10px;
-            pointer-events: none;
-            user-select: none;
-        }
-
-        /* Soft pastel backgrounds per card */
-        .message-card:nth-child(1) { background: #FEF3C7; }
-        .message-card:nth-child(2) { background: #FEE2E2; }
-        .message-card:nth-child(3) { background: #ECFDF5; }
-        .message-card:nth-child(4) { background: #EFF6FF; }
-        .message-card:nth-child(5) { background: #FDF4FF; }
-        .message-card:nth-child(6) { background: #FFF7ED; }
-
-        .message-text {
-            font-family: var(--font-hand);
-            font-size: 1.22rem;
-            line-height: 1.72;
-            color: var(--charcoal);
-            margin-bottom: 22px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .message-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .author-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(28, 25, 23, 0.10);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.875rem;
-            flex-shrink: 0;
-        }
-
-        .author-name  { font-weight: 600; font-size: 0.875rem; }
-        .author-label { font-size: 0.74rem; color: var(--muted); }
-
-        /* ============================================================
-           FOOTER
-        ============================================================ */
-        footer {
-            background: var(--charcoal);
-            color: var(--white);
-            text-align: center;
-            padding: 72px 24px;
-        }
-
-        .footer-divider {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--amber), transparent);
-            margin: 0 auto 34px;
-        }
-
-        .footer-message {
-            font-family: var(--font-display);
-            font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .footer-sub {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,.48);
-            margin-bottom: 28px;
-        }
-
-        .footer-deco {
-            font-size: 1.4rem;
-            letter-spacing: 10px;
-            opacity: .65;
-        }
-
-        /* ============================================================
-           RESPONSIVE TWEAKS
-        ============================================================ */
-        @media (max-width: 480px) {
-            .section { padding: 72px 18px; }
-            .gallery-grid { columns: 2 140px; }
-        }
-
-        /* ============================================================
-           REDUCED MOTION
-        ============================================================ */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            html { scroll-behavior: auto; }
+            .gallery-item img { transition: none; }
+            .lightbox { transition: none; }
         }
     </style>
 </head>
@@ -493,404 +130,97 @@
 <body>
 
 <!-- ================================================================
-     HERO SECTION
-================================================================ -->
-<section class="hero" id="hero">
-    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
-
-    <div class="hero-content">
-        <!-- EDIT: eyebrow text -->
-        <p class="hero-eyebrow">A farewell from your people</p>
-
-        <!-- EDIT: friend's name -->
-        <h1 class="hero-name">Nora</h1>
-
-        <!-- EDIT: tagline -->
-        <p class="hero-tagline">"Wishing you the world, and then some."</p>
-
-        <div class="hero-scroll" aria-hidden="true">
-            Scroll down
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"/>
-                <polyline points="19 12 12 19 5 12"/>
-            </svg>
-        </div>
-    </div>
-</section>
-
-
-<!-- ================================================================
-     ABOUT / TRIBUTE SECTION
-================================================================ -->
-<section class="section about" id="about">
-    <div class="section-inner">
-        <div class="about-grid">
-
-            <div class="about-text">
-                <!-- EDIT: section label -->
-                <p class="section-label">A few words about you</p>
-                <!-- EDIT: tribute heading -->
-                <h2 class="section-title">To someone who made<br>every room brighter</h2>
-
-                <!-- EDIT: tribute paragraph 1 -->
-                <p>There are people who walk into your life and quietly become part of the furniture — the good kind, the kind you never want to imagine the room without. Nora is exactly that. From the very first moment, she brought warmth, laughter, and an endless supply of good ideas to everything she touched.</p>
-
-                <!-- EDIT: tribute paragraph 2 -->
-                <p>Whether it was the late-night study sessions that somehow turned into impromptu road trips, or the way she always knew exactly what to say when things got hard — she has a gift for making people feel seen. Watching her take this next leap feels both terrifying and deeply right. The world out there doesn't know what's coming for it.</p>
-
-                <!-- EDIT: tribute paragraph 3 -->
-                <p>We are so proud of you. And we will miss you every single day — but we'll smile knowing you're out there making new memories, new friends, and probably a whole new group of people who are lucky to know you.</p>
-            </div>
-
-            <div>
-                <div class="pull-quote">
-                    <!-- EDIT: pull-quote text -->
-                    <blockquote>"You have always been the adventure we didn't know we needed. Go out there and be exactly who you are — that is more than enough."</blockquote>
-                    <!-- EDIT: quote attribution -->
-                    <cite>— From all of us 💛</cite>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-<!-- ================================================================
      PHOTO GALLERY
+     EDIT: replace each src with your photo URL
 ================================================================ -->
-<section class="section gallery" id="gallery">
-    <div class="section-inner">
-        <!-- EDIT: gallery section label -->
-        <p class="section-label">Memories we'll keep forever</p>
-        <!-- EDIT: gallery heading -->
-        <h2 class="section-title">Our favourite moments</h2>
+<div class="gallery" id="gallery">
 
-        <div class="gallery-grid" id="gallery-grid">
-
-            <!-- EDIT: replace each src with the actual photo URL, and each caption text -->
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 1">
-                <img src="https://picsum.photos/seed/farewell1/600/420" alt="Memory 1" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Caption for this moment</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 2">
-                <img src="https://picsum.photos/seed/farewell2/600/760" alt="Memory 2" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">That unforgettable evening</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 3">
-                <img src="https://picsum.photos/seed/farewell3/600/460" alt="Memory 3" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Always the life of the party</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 4">
-                <img src="https://picsum.photos/seed/farewell4/600/600" alt="Memory 4" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Summer days we'll never forget</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 5">
-                <img src="https://picsum.photos/seed/farewell5/600/410" alt="Memory 5" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Road trip adventures</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 6">
-                <img src="https://picsum.photos/seed/farewell6/600/800" alt="Memory 6" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Laughing until it hurt</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 7">
-                <img src="https://picsum.photos/seed/farewell7/600/500" alt="Memory 7" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">The whole crew together</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 8">
-                <img src="https://picsum.photos/seed/farewell8/600/430" alt="Memory 8" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Late nights and good vibes</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 9">
-                <img src="https://picsum.photos/seed/farewell9/600/700" alt="Memory 9" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Golden hour, golden memories</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 10">
-                <img src="https://picsum.photos/seed/farewell10/600/450" alt="Memory 10" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">One for the album</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 11">
-                <img src="https://picsum.photos/seed/farewell11/600/540" alt="Memory 11" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">Coffee and conversations</span></div>
-            </div>
-
-            <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 12">
-                <img src="https://picsum.photos/seed/farewell12/600/400" alt="Memory 12" loading="lazy">
-                <div class="gallery-overlay"><span class="gallery-caption">See you on the other side</span></div>
-            </div>
-
-        </div>
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 1">
+        <img src="https://picsum.photos/seed/farewell1/600/420"  alt="Memory 1"  loading="lazy">
     </div>
-</section>
 
-
-<!-- ================================================================
-     MESSAGES WALL
-================================================================ -->
-<section class="section messages" id="messages">
-    <div class="section-inner">
-        <!-- EDIT: messages section label -->
-        <p class="section-label">From the people who love you</p>
-        <h2 class="section-title">Farewell messages</h2>
-
-        <div class="messages-grid">
-
-            <!-- EDIT: each message, name, and label -->
-
-            <div class="message-card">
-                <p class="message-text">Watching you go is the hardest thing, but knowing you're going somewhere amazing makes it easier. You've always been the bravest one among us. Go show the world what you're made of — we'll be cheering for you from here every single step of the way.</p>
-                <div class="message-author">
-                    <div class="author-avatar">S</div>
-                    <div>
-                        <div class="author-name">Sarah</div>
-                        <div class="author-label">Your forever cheerleader</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-card">
-                <p class="message-text">I still can't believe you're really leaving. This place won't be the same without your laugh echoing through the halls. Promise me you'll come back with the most ridiculous stories and a suitcase full of snacks. Miss you already.</p>
-                <div class="message-author">
-                    <div class="author-avatar">J</div>
-                    <div>
-                        <div class="author-name">James</div>
-                        <div class="author-label">Partner in chaos</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-card">
-                <p class="message-text">You taught me that it's okay to be exactly who you are, even when it's scary. Take that lesson with you. The world is going to fall in love with you just as quickly as we did. We'll keep your spot warm until you visit.</p>
-                <div class="message-author">
-                    <div class="author-avatar">A</div>
-                    <div>
-                        <div class="author-name">Aisha</div>
-                        <div class="author-label">Your biggest fan</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-card">
-                <p class="message-text">Remember that time we got completely lost on that camping trip and you somehow turned it into the best night of the whole trip? That's you in a nutshell. You make everything better just by being in it. Safe travels, my friend.</p>
-                <div class="message-author">
-                    <div class="author-avatar">M</div>
-                    <div>
-                        <div class="author-name">Marco</div>
-                        <div class="author-label">Fellow adventurer</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-card">
-                <p class="message-text">I've never met anyone who lights up a room the way you do. Wherever you end up, that place is going to be so much richer for having you in it. Video calls every Sunday — no excuses. Love you loads!</p>
-                <div class="message-author">
-                    <div class="author-avatar">L</div>
-                    <div>
-                        <div class="author-name">Lily</div>
-                        <div class="author-label">Your Sunday call buddy</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="message-card">
-                <p class="message-text">There's a chapter starting for you that is going to be more incredible than any of us can even imagine. You deserve every single good thing coming your way. Go chase it. Eat the food. Learn the language. Dance badly. Enjoy every second.</p>
-                <div class="message-author">
-                    <div class="author-avatar">R</div>
-                    <div>
-                        <div class="author-name">Ravi</div>
-                        <div class="author-label">The sentimental one</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 2">
+        <img src="https://picsum.photos/seed/farewell2/600/760"  alt="Memory 2"  loading="lazy">
     </div>
-</section>
 
-
-<!-- ================================================================
-     FOOTER
-================================================================ -->
-<footer id="footer">
-    <div class="footer-divider" aria-hidden="true"></div>
-    <!-- EDIT: replace "Nora" with friend's name -->
-    <p class="footer-message">We'll miss you, Nora 💛</p>
-    <!-- EDIT: footer subtext -->
-    <p class="footer-sub">Until we meet again — wherever in the world that may be.</p>
-    <div class="footer-deco" aria-hidden="true">✈ &nbsp;✦&nbsp; ✈</div>
-</footer>
-
-
-<!-- ================================================================
-     LIGHTBOX OVERLAY
-================================================================ -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
-    <div class="lightbox-inner">
-        <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
-        <button class="lb-btn lb-prev"  id="lb-prev"  aria-label="Previous photo">&#8592;</button>
-        <img class="lightbox-img" id="lb-img" src="" alt="">
-        <button class="lb-btn lb-next"  id="lb-next"  aria-label="Next photo">&#8594;</button>
-        <p class="lightbox-caption" id="lb-caption"></p>
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 3">
+        <img src="https://picsum.photos/seed/farewell3/600/460"  alt="Memory 3"  loading="lazy">
     </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 4">
+        <img src="https://picsum.photos/seed/farewell4/600/600"  alt="Memory 4"  loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 5">
+        <img src="https://picsum.photos/seed/farewell5/600/410"  alt="Memory 5"  loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 6">
+        <img src="https://picsum.photos/seed/farewell6/600/800"  alt="Memory 6"  loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 7">
+        <img src="https://picsum.photos/seed/farewell7/600/500"  alt="Memory 7"  loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 8">
+        <img src="https://picsum.photos/seed/farewell8/600/430"  alt="Memory 8"  loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 9">
+        <img src="https://picsum.photos/seed/farewell9/600/700"  alt="Memory 9"  loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 10">
+        <img src="https://picsum.photos/seed/farewell10/600/450" alt="Memory 10" loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 11">
+        <img src="https://picsum.photos/seed/farewell11/600/540" alt="Memory 11" loading="lazy">
+    </div>
+
+    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 12">
+        <img src="https://picsum.photos/seed/farewell12/600/400" alt="Memory 12" loading="lazy">
+    </div>
+
 </div>
 
 
 <!-- ================================================================
-     JAVASCRIPT
+     LIGHTBOX
 ================================================================ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lightbox-inner">
+        <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
+        <button class="lb-btn lb-prev"  id="lb-prev"  aria-label="Previous">&#8592;</button>
+        <img class="lightbox-img" id="lb-img" src="" alt="">
+        <button class="lb-btn lb-next"  id="lb-next"  aria-label="Next">&#8594;</button>
+    </div>
+</div>
+
+
 <script>
 (function () {
     'use strict';
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const items    = Array.from(document.querySelectorAll('.gallery-item'));
+    const lightbox = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lb-img');
+    const lbClose  = document.getElementById('lb-close');
+    const lbPrev   = document.getElementById('lb-prev');
+    const lbNext   = document.getElementById('lb-next');
 
-    /* ----------------------------------------------------------
-       PAPER PLANES + CONFETTI CANVAS
-    ---------------------------------------------------------- */
-    const canvas = document.getElementById('confetti-canvas');
-    const ctx    = canvas.getContext('2d');
-
-    function resizeCanvas() {
-        canvas.width  = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    /* Paper planes */
-    const PLANE_COUNT = reduced ? 0 : 7;
-    const planes = Array.from({ length: PLANE_COUNT }, () => spawnPlane(true));
-
-    function spawnPlane(anywhere) {
-        return {
-            x:  anywhere ? Math.random() * canvas.width : -60,
-            y:  Math.random() * canvas.height,
-            vx: Math.random() * 0.9 + 0.45,
-            vy: -(Math.random() * 0.4 + 0.1),
-            rot:  Math.random() * Math.PI * 2,
-            rotV: (Math.random() - 0.5) * 0.012,
-            size: Math.random() * 13 + 9,
-            alpha: Math.random() * 0.38 + 0.18,
-        };
-    }
-
-    function drawPlane(p) {
-        const s = p.size;
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle   = 'rgba(255,255,255,0.88)';
-        ctx.strokeStyle = 'rgba(245,158,11,0.55)';
-        ctx.lineWidth   = 0.85;
-        ctx.beginPath();
-        ctx.moveTo( s,        0);
-        ctx.lineTo(-s * 0.6, -s * 0.48);
-        ctx.lineTo(-s * 0.28, 0);
-        ctx.lineTo(-s * 0.6,  s * 0.48);
-        ctx.closePath();
-        ctx.fill(); ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(-s * 0.28, 0); ctx.lineTo(s, 0);
-        ctx.stroke();
-        ctx.restore();
-    }
-
-    /* Confetti dots */
-    const CONFETTI_COUNT = reduced ? 0 : 28;
-    const COLORS = ['#F59E0B','#FCA5A5','#FCD34D','#FECACA','#FEF3C7','#ffffff'];
-    const confetti = Array.from({ length: CONFETTI_COUNT }, spawnDot.bind(null, true));
-
-    function spawnDot(anywhere) {
-        return {
-            x:    anywhere ? Math.random() * (canvas.width  || 800) : Math.random() * (canvas.width  || 800),
-            y:    anywhere ? Math.random() * (canvas.height || 600) : (canvas.height || 600) + 10,
-            vx:   (Math.random() - 0.5) * 0.55,
-            vy:   -(Math.random() * 0.28 + 0.08),
-            size: Math.random() * 4.5 + 1.5,
-            color: COLORS[Math.floor(Math.random() * COLORS.length)],
-            alpha: Math.random() * 0.45 + 0.12,
-            rot:  Math.random() * Math.PI * 2,
-            rotV: (Math.random() - 0.5) * 0.018,
-            rect: Math.random() > 0.5,
-        };
-    }
-
-    function tick() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        planes.forEach(p => {
-            p.x += p.vx; p.y += p.vy; p.rot += p.rotV;
-            if (p.x > canvas.width + 60) Object.assign(p, spawnPlane(false));
-            drawPlane(p);
-        });
-
-        confetti.forEach(p => {
-            p.x += p.vx; p.y += p.vy; p.rot += p.rotV;
-            if (p.y < -12) { p.y = canvas.height + 12; p.x = Math.random() * canvas.width; }
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.rot);
-            ctx.globalAlpha = p.alpha;
-            ctx.fillStyle   = p.color;
-            if (p.rect) { ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.6); }
-            else         { ctx.beginPath(); ctx.arc(0, 0, p.size, 0, Math.PI * 2); ctx.fill(); }
-            ctx.restore();
-        });
-
-        requestAnimationFrame(tick);
-    }
-    tick();
-
-    /* ----------------------------------------------------------
-       LIGHTBOX
-    ---------------------------------------------------------- */
-    const items      = Array.from(document.querySelectorAll('.gallery-item'));
-    const lightbox   = document.getElementById('lightbox');
-    const lbImg      = document.getElementById('lb-img');
-    const lbCaption  = document.getElementById('lb-caption');
-    const lbClose    = document.getElementById('lb-close');
-    const lbPrev     = document.getElementById('lb-prev');
-    const lbNext     = document.getElementById('lb-next');
-
-    const gallery = items.map(el => ({
-        src:     el.querySelector('img').src,
-        alt:     el.querySelector('img').alt,
-        caption: el.querySelector('.gallery-caption').textContent.trim(),
-    }));
-
-    let current = 0;
+    const srcs = items.map(el => ({ src: el.querySelector('img').src, alt: el.querySelector('img').alt }));
+    let cur = 0;
 
     function show(i) {
-        current = (i + gallery.length) % gallery.length;
-        lbImg.src        = gallery[current].src;
-        lbImg.alt        = gallery[current].alt;
-        lbCaption.textContent = gallery[current].caption;
+        cur = (i + srcs.length) % srcs.length;
+        lbImg.src = srcs[cur].src;
+        lbImg.alt = srcs[cur].alt;
     }
 
-    function open(i) {
-        show(i);
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        lbClose.focus();
-    }
-
-    function close() {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+    function open(i)  { show(i); lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; lbClose.focus(); }
+    function close()  { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
 
     items.forEach((el, i) => {
         el.addEventListener('click',   () => open(i));
@@ -898,41 +228,17 @@
     });
 
     lbClose.addEventListener('click', close);
-    lbPrev.addEventListener( 'click', () => show(current - 1));
-    lbNext.addEventListener( 'click', () => show(current + 1));
+    lbPrev.addEventListener( 'click', () => show(cur - 1));
+    lbNext.addEventListener( 'click', () => show(cur + 1));
     lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
 
     document.addEventListener('keydown', e => {
         if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape')      close();
-        if (e.key === 'ArrowLeft')   show(current - 1);
-        if (e.key === 'ArrowRight')  show(current + 1);
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  show(cur - 1);
+        if (e.key === 'ArrowRight') show(cur + 1);
     });
-
-    /* ----------------------------------------------------------
-       SCROLL FADE-IN
-    ---------------------------------------------------------- */
-    if (!reduced) {
-        const fadeEls = document.querySelectorAll('.section, .message-card, .gallery-item');
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach(en => {
-                if (en.isIntersecting) {
-                    en.target.style.opacity   = '1';
-                    en.target.style.transform = 'translateY(0)';
-                    io.unobserve(en.target);
-                }
-            });
-        }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
-
-        fadeEls.forEach(el => {
-            el.style.opacity    = '0';
-            el.style.transform  = 'translateY(26px)';
-            el.style.transition = 'opacity 0.62s ease, transform 0.62s ease';
-            io.observe(el);
-        });
-    }
-
-})();
+}());
 </script>
 
 </body>
