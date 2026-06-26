@@ -312,6 +312,10 @@
             transition: transform 0.55s cubic-bezier(.25, .46, .45, .94);
         }
 
+        .gallery-item video {
+            cursor: default;
+        }
+
         @media (hover: hover) {
 
             .gallery-item:hover img,
@@ -741,16 +745,17 @@
             const countEl = document.getElementById('gallery-count');
 
             let mediaList = [];
+            let lightboxItems = []; // images only
 
             function buildGrid(list) {
                 grid.innerHTML = '';
+                lightboxItems = list.filter(function (m) { return m.type === 'image'; });
+
+                var lbIdx = 0;
 
                 list.forEach(function (m, i) {
                     const item = document.createElement('div');
                     item.className = 'gallery-item';
-                    item.tabIndex = 0;
-                    item.role = 'button';
-                    item.setAttribute('aria-label', (m.type === 'video' ? 'Play video ' : 'Open photo ') + (i + 1));
                     item.dataset.index = i;
 
                     if (m.type === 'image') {
@@ -759,11 +764,22 @@
                         img.alt = 'Memory ' + (i + 1);
                         img.loading = 'lazy';
                         item.appendChild(img);
+
+                        item.tabIndex = 0;
+                        item.role = 'button';
+                        item.setAttribute('aria-label', 'Open photo ' + (lbIdx + 1));
+
+                        var myLbIdx = lbIdx++;
+                        item.addEventListener('click', function () { openLightbox(myLbIdx); });
+                        item.addEventListener('keydown', function (e) {
+                            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(myLbIdx); }
+                        });
+
                     } else {
                         const vid = document.createElement('video');
-                        vid.muted = true;
                         vid.preload = 'metadata';
                         vid.playsInline = true;
+                        vid.controls = true;
                         vid.poster = videoThumb(m.publicId);
                         const src = document.createElement('source');
                         src.src = videoFull(m.publicId, m.fmt);
@@ -771,21 +787,23 @@
                         vid.appendChild(src);
                         item.appendChild(vid);
 
-                        /* Play badge */
-                        item.insertAdjacentHTML('beforeend',
-                            '<div class="play-badge" aria-hidden="true">' +
-                            '<div class="play-badge-icon">' +
-                            '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
-                            '</div>' +
-                            '</div>' +
-                            '<span class="video-pill">Video</span>'
-                        );
-                    }
+                        const badge = document.createElement('div');
+                        badge.className = 'play-badge';
+                        badge.setAttribute('aria-hidden', 'true');
+                        badge.innerHTML = '<div class="play-badge-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>';
+                        item.appendChild(badge);
+                        item.insertAdjacentHTML('beforeend', '<span class="video-pill">Video</span>');
 
-                    item.addEventListener('click', function () { openLightbox(i); });
-                    item.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(i); }
-                    });
+                        vid.addEventListener('play',  function () { badge.style.display = 'none'; });
+                        vid.addEventListener('pause', function () { badge.style.display = ''; });
+                        vid.addEventListener('ended', function () { badge.style.display = ''; });
+
+                        /* Clicking outside native controls area toggles play/pause */
+                        item.addEventListener('click', function (e) {
+                            if (e.target.closest('video')) return;
+                            if (vid.paused) { vid.play(); } else { vid.pause(); }
+                        });
+                    }
 
                     grid.appendChild(item);
 
@@ -815,8 +833,8 @@
             }
 
             function showMedia(i) {
-                cur = (i + mediaList.length) % mediaList.length;
-                const m = mediaList[cur];
+                cur = (i + lightboxItems.length) % lightboxItems.length;
+                const m = lightboxItems[cur];
 
                 if (m.type === 'video') {
                     stopVideo();
