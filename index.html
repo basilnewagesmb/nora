@@ -42,11 +42,14 @@
             cursor: pointer;
             box-shadow: 0 4px 18px rgba(28,25,23,.10);
             outline-offset: 3px;
+            position: relative;
         }
 
         .gallery-item:focus-visible { outline: 3px solid var(--amber); }
 
-        .gallery-item img {
+        /* Both img and video thumbnails scale the same way */
+        .gallery-item img,
+        .gallery-item video {
             width: 100%;
             height: auto;
             display: block;
@@ -54,7 +57,59 @@
         }
 
         @media (hover: hover) {
-            .gallery-item:hover img { transform: scale(1.05); }
+            .gallery-item:hover img,
+            .gallery-item:hover video { transform: scale(1.05); }
+        }
+
+        /* ── Play badge (video items only) ── */
+        .play-badge {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .play-badge-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 4px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .play-badge-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--charcoal);
+            margin-left: 3px; /* optical centering of triangle */
+        }
+
+        .gallery-item:hover .play-badge-icon {
+            transform: scale(1.12);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        /* Video type label pill */
+        .video-pill {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(28,25,23,.65);
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
         }
 
         /* ── Lightbox ── */
@@ -82,6 +137,7 @@
             width: 100%;
         }
 
+        /* Image in lightbox */
         .lightbox-img {
             width: 100%;
             max-height: 88vh;
@@ -90,6 +146,21 @@
             display: block;
             box-shadow: 0 20px 60px rgba(0,0,0,.4);
         }
+
+        /* Video in lightbox */
+        .lightbox-video {
+            width: 100%;
+            max-height: 88vh;
+            border-radius: var(--radius);
+            display: block;
+            background: #000;
+            box-shadow: 0 20px 60px rgba(0,0,0,.4);
+            outline: none;
+        }
+
+        /* Toggle visibility in lightbox */
+        .lightbox-img.hidden,
+        .lightbox-video.hidden { display: none; }
 
         .lb-btn {
             position: absolute;
@@ -114,6 +185,7 @@
         .lb-prev  { top: 50%; left: -58px;  transform: translateY(-50%); }
         .lb-next  { top: 50%; right: -58px; transform: translateY(-50%); }
 
+        /* Push nav buttons inward on mobile so they don't clip */
         @media (max-width: 680px) {
             .lb-prev { left: 4px;  }
             .lb-next { right: 4px; }
@@ -121,8 +193,10 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .gallery-item img { transition: none; }
-            .lightbox { transition: none; }
+            .gallery-item img,
+            .gallery-item video   { transition: none; }
+            .play-badge-icon      { transition: none; }
+            .lightbox             { transition: none; }
         }
     </style>
 </head>
@@ -130,56 +204,144 @@
 <body>
 
 <!-- ================================================================
-     PHOTO GALLERY
-     EDIT: replace each src with your photo URL
+     MEDIA GALLERY
+     Images  → use <img> inside .gallery-item[data-type="image"]
+     Videos  → use <video> inside .gallery-item[data-type="video"]
+     EDIT: replace each src / data-src with your own file or URL
 ================================================================ -->
 <div class="gallery" id="gallery">
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 1">
-        <img src="https://picsum.photos/seed/farewell1/600/420"  alt="Memory 1"  loading="lazy">
+    <!-- ── Images ── -->
+
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell1/900/630"
+         tabindex="0" role="button" aria-label="Open photo 1">
+        <img src="https://picsum.photos/seed/farewell1/600/420" alt="Memory 1" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 2">
-        <img src="https://picsum.photos/seed/farewell2/600/760"  alt="Memory 2"  loading="lazy">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell2/900/1140"
+         tabindex="0" role="button" aria-label="Open photo 2">
+        <img src="https://picsum.photos/seed/farewell2/600/760" alt="Memory 2" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 3">
-        <img src="https://picsum.photos/seed/farewell3/600/460"  alt="Memory 3"  loading="lazy">
+    <!-- ── Video 1 ── EDIT: replace data-src and <source src> with your video file -->
+    <div class="gallery-item" data-type="video"
+         data-src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+         tabindex="0" role="button" aria-label="Play video 1">
+        <video muted preload="metadata" playsinline
+               poster="https://picsum.photos/seed/vid1/600/420">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+        </video>
+        <div class="play-badge" aria-hidden="true">
+            <div class="play-badge-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </div>
+        </div>
+        <span class="video-pill">Video</span>
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 4">
-        <img src="https://picsum.photos/seed/farewell4/600/600"  alt="Memory 4"  loading="lazy">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell3/900/690"
+         tabindex="0" role="button" aria-label="Open photo 3">
+        <img src="https://picsum.photos/seed/farewell3/600/460" alt="Memory 3" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 5">
-        <img src="https://picsum.photos/seed/farewell5/600/410"  alt="Memory 5"  loading="lazy">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell4/900/900"
+         tabindex="0" role="button" aria-label="Open photo 4">
+        <img src="https://picsum.photos/seed/farewell4/600/600" alt="Memory 4" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 6">
-        <img src="https://picsum.photos/seed/farewell6/600/800"  alt="Memory 6"  loading="lazy">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell5/900/615"
+         tabindex="0" role="button" aria-label="Open photo 5">
+        <img src="https://picsum.photos/seed/farewell5/600/410" alt="Memory 5" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 7">
-        <img src="https://picsum.photos/seed/farewell7/600/500"  alt="Memory 7"  loading="lazy">
+    <!-- ── Video 2 ── EDIT: replace with your video -->
+    <div class="gallery-item" data-type="video"
+         data-src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+         tabindex="0" role="button" aria-label="Play video 2">
+        <video muted preload="metadata" playsinline
+               poster="https://picsum.photos/seed/vid2/600/800">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
+        </video>
+        <div class="play-badge" aria-hidden="true">
+            <div class="play-badge-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </div>
+        </div>
+        <span class="video-pill">Video</span>
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 8">
-        <img src="https://picsum.photos/seed/farewell8/600/430"  alt="Memory 8"  loading="lazy">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell6/900/1200"
+         tabindex="0" role="button" aria-label="Open photo 6">
+        <img src="https://picsum.photos/seed/farewell6/600/800" alt="Memory 6" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 9">
-        <img src="https://picsum.photos/seed/farewell9/600/700"  alt="Memory 9"  loading="lazy">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell7/900/750"
+         tabindex="0" role="button" aria-label="Open photo 7">
+        <img src="https://picsum.photos/seed/farewell7/600/500" alt="Memory 7" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 10">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell8/900/645"
+         tabindex="0" role="button" aria-label="Open photo 8">
+        <img src="https://picsum.photos/seed/farewell8/600/430" alt="Memory 8" loading="lazy">
+    </div>
+
+    <!-- ── Video 3 ── EDIT: replace with your video -->
+    <div class="gallery-item" data-type="video"
+         data-src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+         tabindex="0" role="button" aria-label="Play video 3">
+        <video muted preload="metadata" playsinline
+               poster="https://picsum.photos/seed/vid3/600/500">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4">
+        </video>
+        <div class="play-badge" aria-hidden="true">
+            <div class="play-badge-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </div>
+        </div>
+        <span class="video-pill">Video</span>
+    </div>
+
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell9/900/1050"
+         tabindex="0" role="button" aria-label="Open photo 9">
+        <img src="https://picsum.photos/seed/farewell9/600/700" alt="Memory 9" loading="lazy">
+    </div>
+
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell10/900/675"
+         tabindex="0" role="button" aria-label="Open photo 10">
         <img src="https://picsum.photos/seed/farewell10/600/450" alt="Memory 10" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 11">
+    <!-- ── Video 4 ── EDIT: replace with your video -->
+    <div class="gallery-item" data-type="video"
+         data-src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+         tabindex="0" role="button" aria-label="Play video 4">
+        <video muted preload="metadata" playsinline
+               poster="https://picsum.photos/seed/vid4/600/400">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4" type="video/mp4">
+        </video>
+        <div class="play-badge" aria-hidden="true">
+            <div class="play-badge-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </div>
+        </div>
+        <span class="video-pill">Video</span>
+    </div>
+
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell11/900/810"
+         tabindex="0" role="button" aria-label="Open photo 11">
         <img src="https://picsum.photos/seed/farewell11/600/540" alt="Memory 11" loading="lazy">
     </div>
 
-    <div class="gallery-item" tabindex="0" role="button" aria-label="Open photo 12">
+    <div class="gallery-item" data-type="image" data-src="https://picsum.photos/seed/farewell12/900/600"
+         tabindex="0" role="button" aria-label="Open photo 12">
         <img src="https://picsum.photos/seed/farewell12/600/400" alt="Memory 12" loading="lazy">
     </div>
 
@@ -187,14 +349,22 @@
 
 
 <!-- ================================================================
-     LIGHTBOX
+     LIGHTBOX — handles both images and videos
 ================================================================ -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
     <div class="lightbox-inner">
         <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
         <button class="lb-btn lb-prev"  id="lb-prev"  aria-label="Previous">&#8592;</button>
-        <img class="lightbox-img" id="lb-img" src="" alt="">
-        <button class="lb-btn lb-next"  id="lb-next"  aria-label="Next">&#8594;</button>
+
+        <!-- Image view -->
+        <img class="lightbox-img hidden" id="lb-img" src="" alt="">
+
+        <!-- Video view -->
+        <video class="lightbox-video hidden" id="lb-video" controls playsinline>
+            <source id="lb-video-src" src="" type="video/mp4">
+        </video>
+
+        <button class="lb-btn lb-next" id="lb-next" aria-label="Next">&#8594;</button>
     </div>
 </div>
 
@@ -203,28 +373,66 @@
 (function () {
     'use strict';
 
-    const items    = Array.from(document.querySelectorAll('.gallery-item'));
-    const lightbox = document.getElementById('lightbox');
-    const lbImg    = document.getElementById('lb-img');
-    const lbClose  = document.getElementById('lb-close');
-    const lbPrev   = document.getElementById('lb-prev');
-    const lbNext   = document.getElementById('lb-next');
+    /* Build media index from DOM */
+    const items = Array.from(document.querySelectorAll('.gallery-item'));
+    const media = items.map(el => ({
+        type: el.dataset.type,           // "image" | "video"
+        src:  el.dataset.src,
+        alt:  (el.querySelector('img, video') || {}).alt || '',
+    }));
 
-    const srcs = items.map(el => ({ src: el.querySelector('img').src, alt: el.querySelector('img').alt }));
+    const lightbox   = document.getElementById('lightbox');
+    const lbImg      = document.getElementById('lb-img');
+    const lbVideo    = document.getElementById('lb-video');
+    const lbVideoSrc = document.getElementById('lb-video-src');
+    const lbClose    = document.getElementById('lb-close');
+    const lbPrev     = document.getElementById('lb-prev');
+    const lbNext     = document.getElementById('lb-next');
+
     let cur = 0;
 
-    function show(i) {
-        cur = (i + srcs.length) % srcs.length;
-        lbImg.src = srcs[cur].src;
-        lbImg.alt = srcs[cur].alt;
+    function stopVideo() {
+        lbVideo.pause();
+        lbVideoSrc.src = '';
+        lbVideo.load();
     }
 
-    function open(i)  { show(i); lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; lbClose.focus(); }
-    function close()  { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+    function show(i) {
+        cur = (i + media.length) % media.length;
+        const m = media[cur];
+
+        if (m.type === 'video') {
+            lbImg.classList.add('hidden');
+            lbVideo.classList.remove('hidden');
+            lbVideoSrc.src = m.src;
+            lbVideo.load();
+        } else {
+            stopVideo();
+            lbVideo.classList.add('hidden');
+            lbImg.classList.remove('hidden');
+            lbImg.src = m.src;
+            lbImg.alt = m.alt;
+        }
+    }
+
+    function open(i) {
+        show(i);
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lbClose.focus();
+    }
+
+    function close() {
+        stopVideo();
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 
     items.forEach((el, i) => {
         el.addEventListener('click',   () => open(i));
-        el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
+        el.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+        });
     });
 
     lbClose.addEventListener('click', close);
