@@ -9,11 +9,22 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
 
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             background: #fff;
@@ -22,21 +33,26 @@
             overflow-x: hidden;
         }
 
-        img, video { display: block; max-width: 100%; }
+        img,
+        video {
+            display: block;
+            max-width: 100%;
+        }
 
         /* ── Nav ── */
         nav {
             position: fixed;
-            top: 0; inset-inline: 0;
+            top: 0;
+            inset-inline: 0;
             z-index: 800;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 20px 48px;
-            background: rgba(255,255,255,0.92);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.07);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
         }
 
         .nav-logo {
@@ -49,7 +65,11 @@
             text-decoration: none;
         }
 
-        .nav-links { display: flex; gap: 36px; list-style: none; }
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
 
         .nav-links a {
             font-family: 'Montserrat', sans-serif;
@@ -62,7 +82,9 @@
             transition: opacity 0.2s;
         }
 
-        .nav-links a:hover { opacity: 0.4; }
+        .nav-links a:hover {
+            opacity: 0.4;
+        }
 
         /* ── Hero ── */
         .hero {
@@ -77,16 +99,23 @@
             overflow: hidden;
         }
 
-        .hero::before, .hero::after {
+        .hero::before,
+        .hero::after {
             content: '';
             position: absolute;
-            left: 48px; right: 48px;
+            left: 48px;
+            right: 48px;
             height: 1px;
             background: #0a0a0a;
         }
 
-        .hero::before { top: 108px; }
-        .hero::after  { bottom: 72px; }
+        .hero::before {
+            top: 108px;
+        }
+
+        .hero::after {
+            bottom: 72px;
+        }
 
         .hero-eyebrow {
             font-family: 'Montserrat', sans-serif;
@@ -117,19 +146,72 @@
 
         .hero-scroll {
             position: absolute;
-            bottom: 80px; right: 60px;
+            bottom: 80px;
+            right: 60px;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.6rem;
             font-weight: 700;
             letter-spacing: 0.22em;
             text-transform: uppercase;
             writing-mode: vertical-rl;
-            animation: bob 2.4s ease-in-out infinite;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both,
+                       bob 2.4s ease-in-out 1.4s infinite;
         }
 
         @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(8px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        /* ── Hero entrance animations ── */
+        .hero-eyebrow {
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+        }
+
+        .hero-name {
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        .hero-sub {
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ── Scroll reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .gallery-item.reveal {
+            transform: translateY(16px);
+            transition-duration: 0.55s;
         }
 
         /* ── Gallery section ── */
@@ -197,7 +279,11 @@
             animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* Masonry grid */
         .gallery-grid {
@@ -214,19 +300,24 @@
             outline-offset: 3px;
         }
 
-        .gallery-item:focus-visible { outline: 2px solid #0a0a0a; }
+        .gallery-item:focus-visible {
+            outline: 2px solid #0a0a0a;
+        }
 
         .gallery-item img,
         .gallery-item video {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.55s cubic-bezier(.25,.46,.45,.94);
+            transition: transform 0.55s cubic-bezier(.25, .46, .45, .94);
         }
 
         @media (hover: hover) {
+
             .gallery-item:hover img,
-            .gallery-item:hover video { transform: scale(1.04); }
+            .gallery-item:hover video {
+                transform: scale(1.04);
+            }
         }
 
         /* Play badge */
@@ -240,21 +331,31 @@
         }
 
         .play-badge-icon {
-            width: 56px; height: 56px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.92);
+            background: rgba(255, 255, 255, 0.92);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: transform 0.25s ease;
         }
 
-        .play-badge-icon svg { width: 20px; height: 20px; fill: #0a0a0a; margin-left: 3px; }
-        .gallery-item:hover .play-badge-icon { transform: scale(1.1); }
+        .play-badge-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #0a0a0a;
+            margin-left: 3px;
+        }
+
+        .gallery-item:hover .play-badge-icon {
+            transform: scale(1.1);
+        }
 
         .video-pill {
             position: absolute;
-            top: 10px; left: 10px;
+            top: 10px;
+            left: 10px;
             background: #0a0a0a;
             color: #fff;
             font-family: 'Montserrat', sans-serif;
@@ -329,7 +430,7 @@
             position: fixed;
             inset: 0;
             z-index: 9000;
-            background: rgba(10,10,10,.96);
+            background: rgba(10, 10, 10, .96);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -339,9 +440,16 @@
             transition: opacity .22s ease, visibility .22s ease;
         }
 
-        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-        .lightbox-inner { position: relative; max-width: 960px; width: 100%; }
+        .lightbox-inner {
+            position: relative;
+            max-width: 960px;
+            width: 100%;
+        }
 
         .lightbox-img {
             width: 100%;
@@ -359,14 +467,17 @@
         }
 
         .lightbox-img.hidden,
-        .lightbox-video.hidden { display: none; }
+        .lightbox-video.hidden {
+            display: none;
+        }
 
         .lb-btn {
             position: absolute;
-            background: rgba(255,255,255,.1);
-            border: 1px solid rgba(255,255,255,.15);
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .15);
             color: #fff;
-            width: 44px; height: 44px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -376,301 +487,403 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        .lb-btn:hover { background: rgba(255,255,255,.22); }
+        .lb-btn:hover {
+            background: rgba(255, 255, 255, .22);
+        }
 
-        .lb-close { top: -52px; right: 0; font-size: 1.4rem; }
-        .lb-prev  { top: 50%; left: -58px;  transform: translateY(-50%); }
-        .lb-next  { top: 50%; right: -58px; transform: translateY(-50%); }
+        .lb-close {
+            top: -52px;
+            right: 0;
+            font-size: 1.4rem;
+        }
+
+        .lb-prev {
+            top: 50%;
+            left: -58px;
+            transform: translateY(-50%);
+        }
+
+        .lb-next {
+            top: 50%;
+            right: -58px;
+            transform: translateY(-50%);
+        }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
-            nav { padding: 16px 24px; }
-            .nav-links { display: none; }
-            .hero { padding: 120px 24px 80px; }
-            .hero::before { top: 88px; }
-            .hero::after  { bottom: 60px; }
-            .hero-scroll  { display: none; }
-            .gallery-section { padding: 64px 18px; }
-            .gallery-grid { column-gap: 8px; }
-            .gallery-item { margin-bottom: 8px; }
-            .quote-band { padding: 48px 24px; }
-            footer { padding: 48px 24px; }
-            .footer-right p { text-align: left; }
-            .lb-prev { left: 4px; }
-            .lb-next { right: 4px; }
+            nav {
+                padding: 16px 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 24px 80px;
+            }
+
+            .hero::before {
+                top: 88px;
+            }
+
+            .hero::after {
+                bottom: 60px;
+            }
+
+            .hero-scroll {
+                display: none;
+            }
+
+            .gallery-section {
+                padding: 64px 18px;
+            }
+
+            .gallery-grid {
+                column-gap: 8px;
+            }
+
+            .gallery-item {
+                margin-bottom: 8px;
+            }
+
+            .quote-band {
+                padding: 48px 24px;
+            }
+
+            footer {
+                padding: 48px 24px;
+            }
+
+            .footer-right p {
+                text-align: left;
+            }
+
+            .lb-prev {
+                left: 4px;
+            }
+
+            .lb-next {
+                right: 4px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            .gallery-item img, .gallery-item video,
-            .play-badge-icon, .lightbox, .spinner { transition: none; animation: none; }
-            .hero-scroll { animation: none; }
+            html {
+                scroll-behavior: auto;
+            }
+
+            .gallery-item img,
+            .gallery-item video,
+            .play-badge-icon,
+            .lightbox,
+            .spinner {
+                transition: none;
+                animation: none;
+            }
+
+            .hero-eyebrow,
+            .hero-name,
+            .hero-sub,
+            .hero-scroll,
+            .reveal {
+                animation: none;
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<!-- Nav -->
-<nav>
-    <!-- EDIT: friend's name -->
-    <a class="nav-logo" href="#hero">Nora</a>
-    <ul class="nav-links">
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#quote">Message</a></li>
-    </ul>
-</nav>
+    <!-- Nav -->
+    <nav>
+        <!-- EDIT: friend's name -->
+        <a class="nav-logo" href="#hero">Nora</a>
+        <ul class="nav-links">
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#quote">Message</a></li>
+        </ul>
+    </nav>
 
-<!-- Hero -->
-<section class="hero" id="hero">
-    <!-- EDIT: eyebrow text -->
-    <p class="hero-eyebrow">A farewell from your people &nbsp;—&nbsp; 2025</p>
-    <!-- EDIT: friend's name -->
-    <h1 class="hero-name">Nora</h1>
-    <!-- EDIT: tagline -->
-    <p class="hero-sub">Wishing you the world, and then some.</p>
-    <span class="hero-scroll" aria-hidden="true">Scroll</span>
-</section>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <!-- EDIT: eyebrow text -->
+        <p class="hero-eyebrow">A farewell from your people &nbsp;—&nbsp;</p>
+        <!-- EDIT: friend's name -->
+        <h1 class="hero-name">Nora</h1>
+        <!-- EDIT: tagline -->
+        <p class="hero-sub">Wishing you the world, and then some.</p>
+        <span class="hero-scroll" aria-hidden="true">Scroll</span>
+    </section>
 
-<!-- Gallery — populated dynamically from Cloudinary -->
-<section class="gallery-section" id="gallery">
-    <div class="gallery-header">
-        <div>
-            <p class="section-label">Our memories</p>
-            <!-- EDIT: gallery heading -->
-            <h2 class="gallery-title">Moments<br>Together</h2>
+    <!-- Gallery — populated dynamically from Cloudinary -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-header reveal">
+            <div>
+                <p class="section-label">Our memories</p>
+                <!-- EDIT: gallery heading -->
+                <h2 class="gallery-title">Moments<br>Together</h2>
+            </div>
+            <span class="gallery-count" id="gallery-count">Loading…</span>
         </div>
-        <span class="gallery-count" id="gallery-count">Loading…</span>
+
+        <!-- Loading state shown while fetching -->
+        <div class="gallery-state" id="gallery-loading">
+            <div class="spinner"></div>
+            <p>Loading your memories…</p>
+        </div>
+
+        <!-- Empty state shown if no media found -->
+        <div class="gallery-state" id="gallery-empty" style="display:none">
+            <p>No media uploaded yet — add photos &amp; videos to your Cloudinary account and refresh.</p>
+        </div>
+
+        <!-- Grid is filled by JS -->
+        <div class="gallery-grid" id="gallery-grid" style="display:none"></div>
+    </section>
+
+    <!-- Quote band -->
+    <div class="quote-band reveal" id="quote">
+        <div>
+            <!-- EDIT: farewell quote -->
+            <blockquote>
+                "You have always been the adventure we didn't know we needed.<br>
+                Go out there and be exactly who you are — that is more than enough."
+            </blockquote>
+            <!-- EDIT: attribution -->
+            <cite>— From all of us</cite>
+        </div>
     </div>
 
-    <!-- Loading state shown while fetching -->
-    <div class="gallery-state" id="gallery-loading">
-        <div class="spinner"></div>
-        <p>Loading your memories…</p>
+    <!-- Footer -->
+    <footer class="reveal">
+        <!-- EDIT: friend's name -->
+        <p class="footer-name">Farewell,<br>Nora 💛</p>
+        <div class="footer-right">
+            <!-- EDIT: footer lines -->
+            <p>Until we meet again —</p>
+            <p>wherever in the world that may be.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+        <div class="lightbox-inner">
+            <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
+            <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">&#8592;</button>
+            <img class="lightbox-img   hidden" id="lb-img" src="" alt="">
+            <video class="lightbox-video hidden" id="lb-video" controls playsinline>
+                <source id="lb-video-src" src="" type="video/mp4">
+            </video>
+            <button class="lb-btn lb-next" id="lb-next" aria-label="Next">&#8594;</button>
+        </div>
     </div>
 
-    <!-- Empty state shown if no media found -->
-    <div class="gallery-state" id="gallery-empty" style="display:none">
-        <p>No media uploaded yet — add photos &amp; videos to your Cloudinary account and refresh.</p>
-    </div>
+    <script>
+        (function () {
+            'use strict';
 
-    <!-- Grid is filled by JS -->
-    <div class="gallery-grid" id="gallery-grid" style="display:none"></div>
-</section>
+            /* ── Cloudinary cloud name (public, used for media delivery URLs only) ── */
+            const CLOUD = 'lrd7rkfa';
 
-<!-- Quote band -->
-<div class="quote-band" id="quote">
-    <div>
-        <!-- EDIT: farewell quote -->
-        <blockquote>
-            "You have always been the adventure we didn't know we needed.<br>
-            Go out there and be exactly who you are — that is more than enough."
-        </blockquote>
-        <!-- EDIT: attribution -->
-        <cite>— From all of us</cite>
-    </div>
-</div>
-
-<!-- Footer -->
-<footer>
-    <!-- EDIT: friend's name -->
-    <p class="footer-name">Farewell,<br>Nora 💛</p>
-    <div class="footer-right">
-        <!-- EDIT: footer lines -->
-        <p>Until we meet again —</p>
-        <p>wherever in the world that may be.</p>
-    </div>
-</footer>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
-    <div class="lightbox-inner">
-        <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
-        <button class="lb-btn lb-prev"  id="lb-prev"  aria-label="Previous">&#8592;</button>
-        <img   class="lightbox-img   hidden" id="lb-img"   src="" alt="">
-        <video class="lightbox-video hidden" id="lb-video" controls playsinline>
-            <source id="lb-video-src" src="" type="video/mp4">
-        </video>
-        <button class="lb-btn lb-next" id="lb-next" aria-label="Next">&#8594;</button>
-    </div>
-</div>
-
-<script>
-(function () {
-    'use strict';
-
-    /* ── Cloudinary cloud name (public, used for media delivery URLs only) ── */
-    const CLOUD = 'lrd7rkfa';
-
-    /* ── Cloudinary URL builders ── */
-    function imgThumb(publicId, fmt) {
-        return 'https://res.cloudinary.com/' + CLOUD + '/image/upload/w_600,c_scale,q_auto,f_auto/' + publicId + '.' + fmt;
-    }
-
-    function imgFull(publicId, fmt) {
-        return 'https://res.cloudinary.com/' + CLOUD + '/image/upload/w_1400,c_scale,q_auto/' + publicId + '.' + fmt;
-    }
-
-    function videoThumb(publicId) {
-        /* Extract a poster frame from the video via Cloudinary's image delivery */
-        return 'https://res.cloudinary.com/' + CLOUD + '/video/upload/w_600,so_0,q_auto,f_jpg/' + publicId + '.jpg';
-    }
-
-    function videoFull(publicId, fmt) {
-        return 'https://res.cloudinary.com/' + CLOUD + '/video/upload/q_auto/' + publicId + '.' + fmt;
-    }
-
-    /* ── Fetch all resources via server-side proxy (avoids CORS on Admin API) ── */
-    async function fetchAll() {
-        const r = await fetch('/api/media');
-        if (!r.ok) throw new Error('Media fetch failed: ' + r.status);
-        const d = await r.json();
-        return d.media || [];
-    }
-
-    /* ── Build gallery DOM ── */
-    const grid     = document.getElementById('gallery-grid');
-    const loading  = document.getElementById('gallery-loading');
-    const empty    = document.getElementById('gallery-empty');
-    const countEl  = document.getElementById('gallery-count');
-
-    let mediaList = [];
-
-    function buildGrid(list) {
-        grid.innerHTML = '';
-
-        list.forEach(function (m, i) {
-            const item = document.createElement('div');
-            item.className   = 'gallery-item';
-            item.tabIndex    = 0;
-            item.role        = 'button';
-            item.setAttribute('aria-label', (m.type === 'video' ? 'Play video ' : 'Open photo ') + (i + 1));
-            item.dataset.index = i;
-
-            if (m.type === 'image') {
-                const img = document.createElement('img');
-                img.src     = imgThumb(m.publicId, m.fmt);
-                img.alt     = 'Memory ' + (i + 1);
-                img.loading = 'lazy';
-                item.appendChild(img);
-            } else {
-                const vid = document.createElement('video');
-                vid.muted    = true;
-                vid.preload  = 'metadata';
-                vid.playsInline = true;
-                vid.poster   = videoThumb(m.publicId);
-                const src = document.createElement('source');
-                src.src  = videoFull(m.publicId, m.fmt);
-                src.type = 'video/' + m.fmt;
-                vid.appendChild(src);
-                item.appendChild(vid);
-
-                /* Play badge */
-                item.insertAdjacentHTML('beforeend',
-                    '<div class="play-badge" aria-hidden="true">' +
-                        '<div class="play-badge-icon">' +
-                            '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
-                        '</div>' +
-                    '</div>' +
-                    '<span class="video-pill">Video</span>'
-                );
+            /* ── Cloudinary URL builders ── */
+            function imgThumb(publicId, fmt) {
+                return 'https://res.cloudinary.com/' + CLOUD + '/image/upload/w_600,c_scale,q_auto,f_auto/' + publicId + '.' + fmt;
             }
 
-            item.addEventListener('click',   function () { openLightbox(i); });
-            item.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(i); }
+            function imgFull(publicId, fmt) {
+                return 'https://res.cloudinary.com/' + CLOUD + '/image/upload/w_1400,c_scale,q_auto/' + publicId + '.' + fmt;
+            }
+
+            function videoThumb(publicId) {
+                /* Extract a poster frame from the video via Cloudinary's image delivery */
+                return 'https://res.cloudinary.com/' + CLOUD + '/video/upload/w_600,so_0,q_auto,f_jpg/' + publicId + '.jpg';
+            }
+
+            function videoFull(publicId, fmt) {
+                return 'https://res.cloudinary.com/' + CLOUD + '/video/upload/q_auto/' + publicId + '.' + fmt;
+            }
+
+            /* ── Scroll reveal ── */
+            var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var revealObs;
+
+            if (!prefersReduced) {
+                revealObs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            revealObs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+                document.querySelectorAll('.reveal').forEach(function (el) {
+                    revealObs.observe(el);
+                });
+            }
+
+            /* ── Fetch all resources via server-side proxy (avoids CORS on Admin API) ── */
+            async function fetchAll() {
+                const r = await fetch('/api/media');
+                if (!r.ok) throw new Error('Media fetch failed: ' + r.status);
+                const d = await r.json();
+                return d.media || [];
+            }
+
+            /* ── Build gallery DOM ── */
+            const grid = document.getElementById('gallery-grid');
+            const loading = document.getElementById('gallery-loading');
+            const empty = document.getElementById('gallery-empty');
+            const countEl = document.getElementById('gallery-count');
+
+            let mediaList = [];
+
+            function buildGrid(list) {
+                grid.innerHTML = '';
+
+                list.forEach(function (m, i) {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.tabIndex = 0;
+                    item.role = 'button';
+                    item.setAttribute('aria-label', (m.type === 'video' ? 'Play video ' : 'Open photo ') + (i + 1));
+                    item.dataset.index = i;
+
+                    if (m.type === 'image') {
+                        const img = document.createElement('img');
+                        img.src = imgThumb(m.publicId, m.fmt);
+                        img.alt = 'Memory ' + (i + 1);
+                        img.loading = 'lazy';
+                        item.appendChild(img);
+                    } else {
+                        const vid = document.createElement('video');
+                        vid.muted = true;
+                        vid.preload = 'metadata';
+                        vid.playsInline = true;
+                        vid.poster = videoThumb(m.publicId);
+                        const src = document.createElement('source');
+                        src.src = videoFull(m.publicId, m.fmt);
+                        src.type = 'video/' + m.fmt;
+                        vid.appendChild(src);
+                        item.appendChild(vid);
+
+                        /* Play badge */
+                        item.insertAdjacentHTML('beforeend',
+                            '<div class="play-badge" aria-hidden="true">' +
+                            '<div class="play-badge-icon">' +
+                            '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+                            '</div>' +
+                            '</div>' +
+                            '<span class="video-pill">Video</span>'
+                        );
+                    }
+
+                    item.addEventListener('click', function () { openLightbox(i); });
+                    item.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(i); }
+                    });
+
+                    grid.appendChild(item);
+
+                    if (!prefersReduced && revealObs) {
+                        item.classList.add('reveal');
+                        item.style.transitionDelay = (Math.min(i, 7) * 55) + 'ms';
+                        revealObs.observe(item);
+                    }
+                });
+            }
+
+            /* ── Lightbox ── */
+            const lightbox = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lb-img');
+            const lbVideo = document.getElementById('lb-video');
+            const lbVideoSrc = document.getElementById('lb-video-src');
+            const lbClose = document.getElementById('lb-close');
+            const lbPrev = document.getElementById('lb-prev');
+            const lbNext = document.getElementById('lb-next');
+
+            let cur = 0;
+
+            function stopVideo() {
+                lbVideo.pause();
+                lbVideoSrc.src = '';
+                lbVideo.load();
+            }
+
+            function showMedia(i) {
+                cur = (i + mediaList.length) % mediaList.length;
+                const m = mediaList[cur];
+
+                if (m.type === 'video') {
+                    stopVideo();
+                    lbImg.classList.add('hidden');
+                    lbVideo.classList.remove('hidden');
+                    lbVideoSrc.src = videoFull(m.publicId, m.fmt);
+                    lbVideoSrc.type = 'video/' + m.fmt;
+                    lbVideo.load();
+                } else {
+                    stopVideo();
+                    lbVideo.classList.add('hidden');
+                    lbImg.classList.remove('hidden');
+                    lbImg.src = imgFull(m.publicId, m.fmt);
+                    lbImg.alt = 'Memory ' + (cur + 1);
+                }
+            }
+
+            function openLightbox(i) {
+                showMedia(i);
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                lbClose.focus();
+            }
+
+            function closeLightbox() {
+                stopVideo();
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            lbClose.addEventListener('click', closeLightbox);
+            lbPrev.addEventListener('click', function () { showMedia(cur - 1); });
+            lbNext.addEventListener('click', function () { showMedia(cur + 1); });
+            lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
+
+            document.addEventListener('keydown', function (e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') showMedia(cur - 1);
+                if (e.key === 'ArrowRight') showMedia(cur + 1);
             });
 
-            grid.appendChild(item);
-        });
-    }
+            /* ── Init ── */
+            fetchAll().then(function (list) {
+                loading.style.display = 'none';
 
-    /* ── Lightbox ── */
-    const lightbox   = document.getElementById('lightbox');
-    const lbImg      = document.getElementById('lb-img');
-    const lbVideo    = document.getElementById('lb-video');
-    const lbVideoSrc = document.getElementById('lb-video-src');
-    const lbClose    = document.getElementById('lb-close');
-    const lbPrev     = document.getElementById('lb-prev');
-    const lbNext     = document.getElementById('lb-next');
+                if (list.length === 0) {
+                    empty.style.display = 'block';
+                    countEl.textContent = '0 items';
+                    return;
+                }
 
-    let cur = 0;
+                mediaList = list;
+                countEl.textContent = list.length + ' item' + (list.length !== 1 ? 's' : '');
+                buildGrid(list);
+                grid.style.display = 'block';
 
-    function stopVideo() {
-        lbVideo.pause();
-        lbVideoSrc.src = '';
-        lbVideo.load();
-    }
+            }).catch(function (err) {
+                loading.style.display = 'none';
+                empty.style.display = 'block';
+                empty.querySelector('p').textContent = 'Could not load media. Check your connection and refresh.';
+                console.error('Cloudinary fetch error:', err);
+            });
 
-    function showMedia(i) {
-        cur = (i + mediaList.length) % mediaList.length;
-        const m = mediaList[cur];
-
-        if (m.type === 'video') {
-            stopVideo();
-            lbImg.classList.add('hidden');
-            lbVideo.classList.remove('hidden');
-            lbVideoSrc.src  = videoFull(m.publicId, m.fmt);
-            lbVideoSrc.type = 'video/' + m.fmt;
-            lbVideo.load();
-        } else {
-            stopVideo();
-            lbVideo.classList.add('hidden');
-            lbImg.classList.remove('hidden');
-            lbImg.src = imgFull(m.publicId, m.fmt);
-            lbImg.alt = 'Memory ' + (cur + 1);
-        }
-    }
-
-    function openLightbox(i) {
-        showMedia(i);
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        lbClose.focus();
-    }
-
-    function closeLightbox() {
-        stopVideo();
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    lbClose.addEventListener('click', closeLightbox);
-    lbPrev.addEventListener( 'click', function () { showMedia(cur - 1); });
-    lbNext.addEventListener( 'click', function () { showMedia(cur + 1); });
-    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
-
-    document.addEventListener('keydown', function (e) {
-        if (!lightbox.classList.contains('active')) return;
-        if (e.key === 'Escape')     closeLightbox();
-        if (e.key === 'ArrowLeft')  showMedia(cur - 1);
-        if (e.key === 'ArrowRight') showMedia(cur + 1);
-    });
-
-    /* ── Init ── */
-    fetchAll().then(function (list) {
-        loading.style.display = 'none';
-
-        if (list.length === 0) {
-            empty.style.display = 'block';
-            countEl.textContent = '0 items';
-            return;
-        }
-
-        mediaList = list;
-        countEl.textContent = list.length + ' item' + (list.length !== 1 ? 's' : '');
-        buildGrid(list);
-        grid.style.display = 'block';
-
-    }).catch(function (err) {
-        loading.style.display = 'none';
-        empty.style.display   = 'block';
-        empty.querySelector('p').textContent = 'Could not load media. Check your connection and refresh.';
-        console.error('Cloudinary fetch error:', err);
-    });
-
-}());
-</script>
+        }());
+    </script>
 
 </body>
+
 </html>
